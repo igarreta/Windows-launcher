@@ -29,6 +29,32 @@ python main.py
 
 The app starts minimized to the system tray. Press `Alt+Space` to open the launcher.
 
+## Run at startup
+
+The launcher can register itself to start automatically when you log in. It writes a single value to the Windows registry under `HKEY_CURRENT_USER` — no admin rights required.
+
+```bash
+# Register for startup
+python main.py --install
+
+# Remove from startup
+python main.py --uninstall
+
+# Check current status
+python main.py --status
+```
+
+`--install` stores a registry value at:
+
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+  WindowsLauncher = "C:\..\.venv\Scripts\pythonw.exe" "C:\..\main.py"
+```
+
+`pythonw.exe` is used instead of `python.exe` so no console window appears on login. The value is scoped to your user account and is removed cleanly by `--uninstall`.
+
+> **Tip:** run `--install` once after setup; the hotkey will be available immediately after every login without any manual step.
+
 ## Project structure
 
 ```
