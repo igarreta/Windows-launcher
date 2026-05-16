@@ -1,0 +1,65 @@
+{
+  "folders": [
+    {
+      "id": "system",
+      "name": "System",
+      "entries": [
+        {
+          "id": "notepad",
+          "name": "Notepad",
+          "description": "Simple text editor",
+          "actionable": {
+            "type": "exe",
+            "path": "C:\\Windows\\System32\\notepad.exe",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        },
+        {
+          "id": "explorer",
+          "name": "Explorer",
+          "description": "File manager",
+          "actionable": {
+            "type": "exe",
+            "path": "C:\\Windows\\explorer.exe",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "web",
+      "name": "Web",
+      "entries": [
+        {
+          "id": "github",
+          "name": "GitHub",
+          "description": "Source code hosting",
+          "actionable": {
+            "type": "url",
+            "path": "https://github.com",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "global_hotkey": "Alt+Space",
+    "columns": 6
+  }
+}
