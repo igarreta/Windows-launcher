@@ -12,7 +12,7 @@ from ..models import Entry
 
 class EntryCard(QFrame):
     activated = Signal(object)      # Entry
-    edit_requested = Signal(object) # Entry, folder_id
+    edit_requested = Signal(object, str)    # Entry, folder_id
     delete_requested = Signal(object, str)  # Entry, folder_id
 
     CARD_W = 120
