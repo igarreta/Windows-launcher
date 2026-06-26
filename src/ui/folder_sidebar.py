@@ -11,7 +11,7 @@ _ALL_ID = ""
 _SIDEBAR_STYLE = """
     QWidget#sidebar {
         background-color: #161b22;
-        border-left: 1px solid #21262d;
+        border-right: 1px solid #21262d;
     }
 """
 
@@ -52,6 +52,9 @@ class FolderSidebar(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("sidebar")
+        # QWidget subclasses don't paint a stylesheet background unless this
+        # attribute is set — without it the sidebar looks transparent.
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setFixedWidth(210)
         self.setStyleSheet(_SIDEBAR_STYLE)
 

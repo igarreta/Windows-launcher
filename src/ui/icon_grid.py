@@ -8,9 +8,10 @@ from .flow_layout import FlowLayout
 
 
 class IconGrid(QScrollArea):
-    entry_activated = Signal(object)        # Entry
-    edit_requested = Signal(object, str)    # Entry, folder_id
-    delete_requested = Signal(object, str)  # Entry, folder_id
+    entry_activated = Signal(object)            # Entry
+    edit_requested = Signal(object, str)        # Entry, folder_id
+    duplicate_requested = Signal(object, str)   # Entry, folder_id
+    delete_requested = Signal(object, str)      # Entry, folder_id
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -50,6 +51,7 @@ class IconGrid(QScrollArea):
                 card = EntryCard(entry, folder.id, parent=self._container)
                 card.activated.connect(self.entry_activated)
                 card.edit_requested.connect(self.edit_requested)
+                card.duplicate_requested.connect(self.duplicate_requested)
                 card.delete_requested.connect(self.delete_requested)
                 self._flow.addWidget(card)
                 self._cards.append(card)
@@ -61,6 +63,7 @@ class IconGrid(QScrollArea):
         card = EntryCard(entry, folder_id, parent=self._container)
         card.activated.connect(self.entry_activated)
         card.edit_requested.connect(self.edit_requested)
+        card.duplicate_requested.connect(self.duplicate_requested)
         card.delete_requested.connect(self.delete_requested)
         self._flow.addWidget(card)
         self._cards.append(card)

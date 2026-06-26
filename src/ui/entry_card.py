@@ -12,8 +12,9 @@ from ..models import Entry
 
 class EntryCard(QFrame):
     activated = Signal(object)      # Entry
-    edit_requested = Signal(object, str)    # Entry, folder_id
-    delete_requested = Signal(object, str)  # Entry, folder_id
+    edit_requested = Signal(object, str)        # Entry, folder_id
+    duplicate_requested = Signal(object, str)   # Entry, folder_id
+    delete_requested = Signal(object, str)      # Entry, folder_id
 
     CARD_W = 120
     CARD_H = 150
@@ -97,6 +98,7 @@ class EntryCard(QFrame):
         menu = QMenu(self)
         menu.setStyleSheet(_MENU_STYLE)
         edit_act = menu.addAction("Edit")
+        duplicate_act = menu.addAction("Duplicate")
         delete_act = menu.addAction("Delete")
         open_loc_act = None
         if self._entry.actionable.type not in ("url", "cmd"):
@@ -106,6 +108,8 @@ class EntryCard(QFrame):
         chosen = menu.exec(event.globalPos())
         if chosen == edit_act:
             self.edit_requested.emit(self._entry, self._folder_id)
+        elif chosen == duplicate_act:
+            self.duplicate_requested.emit(self._entry, self._folder_id)
         elif chosen == delete_act:
             self.delete_requested.emit(self._entry, self._folder_id)
         elif open_loc_act and chosen == open_loc_act:

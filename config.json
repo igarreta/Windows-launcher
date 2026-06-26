@@ -33,6 +33,21 @@
             "source": "auto",
             "value": null
           }
+        },
+        {
+          "id": "15531778",
+          "name": "Backup Outlook",
+          "description": "Copia archivo de C:\\Outlook a OneDrive. Outlook debe estar cerrado",
+          "actionable": {
+            "type": "lnk",
+            "path": "C:\\Outlook\\backup_pst.lnk",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
         }
       ]
     },
@@ -49,6 +64,78 @@
             "path": "https://github.com",
             "args": [],
             "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "dd7456cf",
+      "name": "Redes",
+      "entries": [
+        {
+          "id": "0d69db4b",
+          "name": "WiFi Scanner",
+          "description": "Revisa dispositivos conectados",
+          "actionable": {
+            "type": "exe",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\WiFiDeviceScanner\\bin\\Debug\\net8.0-windows\\wifi_scanner.exe",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        },
+        {
+          "id": "5afe5561",
+          "name": "Habilitar subnets",
+          "description": "Conecta con subnets de homeassitant",
+          "actionable": {
+            "type": "lnk",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\enable-routes.lnk",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        },
+        {
+          "id": "6372820d",
+          "name": "Deshabilitar subnets",
+          "description": "",
+          "actionable": {
+            "type": "ps1",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\disable-routes.ps1",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "auto",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "361eba57",
+      "name": "Claude",
+      "entries": [
+        {
+          "id": "5b473358",
+          "name": "Tablero de Comando",
+          "description": "",
+          "actionable": {
+            "type": "cmd",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\.local\\bin\\claude.exe",
+            "args": [],
+            "working_dir": "C:\\Users\\RamonSantiagoIgarret\\OneDrive - Igarreta SACI\\Tablero de comando - Documentos"
           },
           "logo": {
             "source": "auto",
