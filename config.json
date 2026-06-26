@@ -92,33 +92,33 @@
           }
         },
         {
-          "id": "6372820d",
-          "name": "Deshabilitar subnets",
-          "description": "",
-          "actionable": {
-            "type": "ps1",
-            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\disable-routes.ps1",
-            "args": [],
-            "working_dir": null
-          },
-          "logo": {
-            "source": "auto",
-            "value": null
-          }
-        },
-        {
           "id": "5afe5561",
           "name": "Habilitar subnets",
           "description": "Conecta con subnets de homeassitant",
           "actionable": {
             "type": "ps1",
-            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\enable-routes.ps1",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\windows-scripts\\tailscale\\enable-routes.ps1",
             "args": [],
             "working_dir": null
           },
           "logo": {
-            "source": "auto",
-            "value": null
+            "source": "file",
+            "value": "C:\\Users\\RamonSantiagoIgarret\\bin\\windows-scripts\\tailscale\\conexion.svg"
+          }
+        },
+        {
+          "id": "6372820d",
+          "name": "Deshabilitar subnets",
+          "description": "",
+          "actionable": {
+            "type": "ps1",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\windows-scripts\\tailscale\\disable-routes.ps1",
+            "args": [],
+            "working_dir": null
+          },
+          "logo": {
+            "source": "file",
+            "value": "C:\\Users\\RamonSantiagoIgarret\\bin\\windows-scripts\\tailscale\\desconexion.svg"
           }
         }
       ]
