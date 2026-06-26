@@ -82,6 +82,7 @@ class MainWindow(QMainWindow):
         self._grid.entry_activated.connect(self._launch)
         self._grid.edit_requested.connect(self._edit_entry)
         self._grid.duplicate_requested.connect(self._duplicate_entry)
+        self._grid.move_requested.connect(self._move_entry)
         self._grid.delete_requested.connect(self._delete_entry)
         content_layout.addWidget(self._grid, stretch=1)
 
@@ -162,6 +163,10 @@ class MainWindow(QMainWindow):
         clone.name = f"{entry.name} (copy)"
         self._cm.add_entry(folder_id, clone)
         self._grid.add_card(clone, folder_id)
+
+    def _move_entry(self, entry: Entry, folder_id: str, offset: int):
+        if self._cm.move_entry(folder_id, entry.id, offset):
+            self._grid.load_config(self._cm.config)
 
     def _delete_entry(self, entry: Entry, folder_id: str):
         reply = QMessageBox.question(
