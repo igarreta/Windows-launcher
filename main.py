@@ -10,6 +10,7 @@ from PySide6.QtCore import QObject, Signal, Qt
 
 from src.config_manager import ConfigManager
 from src.hotkey import GlobalHotkeyManager
+from src.launcher import EntryLauncher
 from src.ui.main_window import MainWindow
 
 CONFIG_PATH = Path(__file__).parent / "config.json"
@@ -78,6 +79,18 @@ class _Bridge(QObject):
     show_launcher = Signal()
     quit_app = Signal()
 
+    def __init__(self):
+        super().__init__()
+        self.icon = None  # pystray.Icon, set once the tray is up
+
+    def notify(self, title: str, message: str, success: bool) -> None:
+        """Show a tray balloon notification. Safe to call from any thread."""
+        if self.icon is not None:
+            try:
+                self.icon.notify(message, title)
+            except Exception as exc:
+                print(f"[tray] notify failed: {exc}", file=sys.stderr)
+
 
 def _build_tray_icon(bridge: _Bridge):
     try:
@@ -97,6 +110,7 @@ def _build_tray_icon(bridge: _Bridge):
             pystray.MenuItem("Quit", lambda _icon, _item: bridge.quit_app.emit()),
         )
         icon = pystray.Icon("windows-launcher", img, "Windows Launcher", menu)
+        bridge.icon = icon
         icon.run()
     except Exception as exc:
         print(f"[tray] Failed to start system tray: {exc}", file=sys.stderr)
@@ -121,6 +135,8 @@ def main():
     bridge = _Bridge()
     bridge.show_launcher.connect(window.toggle_visibility, Qt.ConnectionType.QueuedConnection)
     bridge.quit_app.connect(app.quit, Qt.ConnectionType.QueuedConnection)
+
+    EntryLauncher.set_notifier(bridge.notify)
 
     hotkey_mgr = GlobalHotkeyManager(
         config_manager.config.settings.global_hotkey,

@@ -85,7 +85,7 @@ def _parse_hotkey(hotkey_str: str) -> tuple[int, int]:
     vk_map = {
         "space": VK_SPACE,
         **{f"f{i}": 0x6F + i for i in range(1, 13)},
-        **{chr(c): c for c in range(ord("A"), ord("Z") + 1)},
+        **{chr(c).lower(): c for c in range(ord("A"), ord("Z") + 1)},
     }
     for part in parts:
         lower = part.lower()

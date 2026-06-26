@@ -63,6 +63,23 @@ class ConfigManager:
             folder.entries = [e for e in folder.entries if e.id != entry_id]
             self.save()
 
+    def move_entry(self, folder_id: str, entry_id: str, offset: int) -> bool:
+        """Move an entry within its folder by `offset` positions (-1 left,
+        +1 right). Returns True if the order changed (and was saved)."""
+        folder = self._config.find_folder(folder_id)
+        if folder is None:
+            return False
+        entries = folder.entries
+        idx = next((i for i, e in enumerate(entries) if e.id == entry_id), None)
+        if idx is None:
+            return False
+        new_idx = idx + offset
+        if new_idx < 0 or new_idx >= len(entries):
+            return False
+        entries.insert(new_idx, entries.pop(idx))
+        self.save()
+        return True
+
     # --- Folder operations ---
 
     def add_folder(self, folder: Folder) -> None:

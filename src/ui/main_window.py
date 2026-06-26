@@ -81,16 +81,18 @@ class MainWindow(QMainWindow):
         self._grid = IconGrid()
         self._grid.entry_activated.connect(self._launch)
         self._grid.edit_requested.connect(self._edit_entry)
+        self._grid.duplicate_requested.connect(self._duplicate_entry)
+        self._grid.move_requested.connect(self._move_entry)
         self._grid.delete_requested.connect(self._delete_entry)
         content_layout.addWidget(self._grid, stretch=1)
 
-        outer.addWidget(content, stretch=1)
-
-        # Right sidebar
+        # Left sidebar
         self._sidebar = FolderSidebar()
         self._sidebar.folder_selected.connect(self._on_folder_selected)
         self._sidebar.add_folder_requested.connect(self._add_folder)
         outer.addWidget(self._sidebar)
+
+        outer.addWidget(content, stretch=1)
 
         # Escape to hide
         esc = QShortcut(QKeySequence("Escape"), self)
@@ -153,6 +155,18 @@ class MainWindow(QMainWindow):
             new_entry, new_folder_id, old_folder_id = dialog.get_result()
             self._cm.update_entry(new_entry, new_folder_id, old_folder_id)
             self._grid.update_card(new_entry, new_folder_id)
+
+    def _duplicate_entry(self, entry: Entry, folder_id: str):
+        # Deep-copy via JSON round-trip; clear id so ConfigManager assigns a new one
+        clone = Entry.from_dict(entry.to_dict())
+        clone.id = ""
+        clone.name = f"{entry.name} (copy)"
+        self._cm.add_entry(folder_id, clone)
+        self._grid.add_card(clone, folder_id)
+
+    def _move_entry(self, entry: Entry, folder_id: str, offset: int):
+        if self._cm.move_entry(folder_id, entry.id, offset):
+            self._grid.load_config(self._cm.config)
 
     def _delete_entry(self, entry: Entry, folder_id: str):
         reply = QMessageBox.question(
