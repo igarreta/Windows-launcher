@@ -92,12 +92,12 @@
           }
         },
         {
-          "id": "5afe5561",
-          "name": "Habilitar subnets",
-          "description": "Conecta con subnets de homeassitant",
+          "id": "6372820d",
+          "name": "Deshabilitar subnets",
+          "description": "",
           "actionable": {
-            "type": "lnk",
-            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\enable-routes.lnk",
+            "type": "ps1",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\disable-routes.ps1",
             "args": [],
             "working_dir": null
           },
@@ -107,12 +107,12 @@
           }
         },
         {
-          "id": "6372820d",
-          "name": "Deshabilitar subnets",
-          "description": "",
+          "id": "5afe5561",
+          "name": "Habilitar subnets",
+          "description": "Conecta con subnets de homeassitant",
           "actionable": {
             "type": "ps1",
-            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\disable-routes.ps1",
+            "path": "C:\\Users\\RamonSantiagoIgarret\\bin\\tailscale\\enable-routes.ps1",
             "args": [],
             "working_dir": null
           },

@@ -29,6 +29,17 @@ _EXT_TO_TYPE = {
     ".ps1": "ps1",
 }
 
+# Types that are a sensible match for a given extension. When the current type
+# is already in this set we leave it alone (e.g. an .exe deliberately run as
+# "cmd"); otherwise we re-infer to avoid mismatches like "lnk" on a .ps1 path.
+_EXT_COMPATIBLE_TYPES = {
+    ".exe": {"exe", "cmd"},
+    ".bat": {"bat", "cmd"},
+    ".cmd": {"bat", "cmd"},
+    ".lnk": {"lnk"},
+    ".ps1": {"ps1"},
+}
+
 _DIALOG_STYLE = """
     QDialog {
         background-color: #0d1117;
@@ -126,6 +137,8 @@ class EntryEditorDialog(QDialog):
         path_layout.setSpacing(6)
         self._path = QLineEdit()
         self._path.setPlaceholderText("Path or URL")
+        # Keep the type in sync when the path is typed by hand, not just on Browse
+        self._path.textEdited.connect(self._sync_type_to_path)
         self._browse_btn = QPushButton("Browse…")
         self._browse_btn.clicked.connect(self._browse)
         path_layout.addWidget(self._path)
@@ -204,11 +217,20 @@ class EntryEditorDialog(QDialog):
         if not path:
             return
         self._path.setText(path.replace("/", "\\"))
-        inferred = _EXT_TO_TYPE.get(os.path.splitext(path)[1].lower())
-        if inferred:
-            idx = self._type_combo.findText(inferred)
-            if idx >= 0:
-                self._type_combo.setCurrentIndex(idx)
+        self._sync_type_to_path(path)
+
+    def _sync_type_to_path(self, path: str):
+        """Infer the actionable type from the path extension, unless the
+        current type is already a sensible match for it."""
+        ext = os.path.splitext(path)[1].lower()
+        inferred = _EXT_TO_TYPE.get(ext)
+        if not inferred:
+            return
+        if self._type_combo.currentText() in _EXT_COMPATIBLE_TYPES.get(ext, {inferred}):
+            return
+        idx = self._type_combo.findText(inferred)
+        if idx >= 0:
+            self._type_combo.setCurrentIndex(idx)
 
     def _browse_logo(self):
         path, _ = QFileDialog.getOpenFileName(
